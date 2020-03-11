@@ -2,6 +2,8 @@
 
 #### Ben Hart
 
+(wholsale stolen from Tom Sydney Kerckhove & FP complete)
+
 What is a Terminal user interface?
 
  - not a Graphic interface
@@ -10,6 +12,13 @@ What is a Terminal user interface?
  - think 'ncurses'
  - some similar apps - tig, ranger, vim, emacs, nmtui
 
+clone:
+https://github.com/NorfairKing/tui-base
+run:
+`stack install`
+
+to run the app at any time, run: 
+`stack run`
 _________
 
 # What is the Brick library?
@@ -42,7 +51,6 @@ _________
 
 - today, we'll look at an app that uses a simple state and the default events.
 
-https://github.com/NorfairKing/tui-base
 
 _________
 
@@ -59,4 +67,33 @@ data App s e n =
 - you can think of `EventM` as IO
 - `AttrMap` is a way to do styling
 - Widget is sort of like `show` it is a type that knows how to draw itself.
+
+_________
+
+# The app we'll be building today
+
+stage 1: show current list of directories
+- list dir on startup
+- display contents
+
+Stage 2: scroll through the list with a cursor
+- Events for up/down
+- adjust render function
+
+Stage 3: Select one and dive deeper
+- Event for Enter keypress 
+- adjust render function
+
+_________
+
+# important functions
+
+## from Haskell:
+`getCurrentDirectory :: IO Filepath`
+`getDirectoryContents :: FilePath -> IO [FilePath]`
+
+## from the brick library:
+`str :: String -> Widget n` - renders a string
+`vbox :: [Widget n] -> Widget n` - renders a box around widgets vertically
+
 
