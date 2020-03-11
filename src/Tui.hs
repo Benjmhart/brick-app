@@ -17,7 +17,7 @@ tui = do
   print endState
 
 data TuiState =
-  TuiState
+  TuiState { tuiStatePaths :: [FilePath] }
   deriving (Show, Eq)
 
 data ResourceName =
@@ -35,10 +35,15 @@ tuiApp =
     }
 
 buildInitialState :: IO TuiState
-buildInitialState = pure TuiState
+buildInitialState = do
+  here <- getCurrentDirectory
+  contents <- getDirectoryContents here
+  pure $ TuiState contents
 
 drawTui :: TuiState -> [Widget ResourceName]
-drawTui _ts = []
+drawTui (TuiState tuiStatePaths) 
+  = [ vBox $ map str $ tuiStatePaths
+    ]
 
 handleTuiEvent :: TuiState -> BrickEvent n e -> EventM n (Next TuiState)
 handleTuiEvent s e =
