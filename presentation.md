@@ -19,6 +19,9 @@ run:
 
 to run the app at any time, run: 
 `stack run`
+tooling:
+`stack install ghcid`
+`echo "--command=stack ghci --allow-eval" > .ghcid`
 _________
 
 # What is the Brick library?
