@@ -4,7 +4,7 @@ module Tui where
 
 import System.Directory
 import System.Exit (die)
-
+import Control.Monad.IO.Class (liftIO)
 import Data.List.NonEmpty (NonEmpty (..))
 import qualified Data.List.NonEmpty as NE
 
@@ -67,20 +67,27 @@ drawPath NotSel fp = str fp
 drawPath Sel fp = withAttr "selected" $ str fp
 
 handleTuiEvent :: TuiState -> BrickEvent n e -> EventM n (Next TuiState)
-handleTuiEvent s e =
+handleTuiEvent s@(TuiState nec) e = do
   case e of
     VtyEvent vtye ->
       case vtye of
         EvKey (KChar 'q') [] -> halt s
         EvKey KDown [] -> do
-          let nec = tuiStatePaths s
           case NEC.nonEmptyCursorSelectNext nec of
             Nothing -> continue s
             Just nec' -> continue $ s { tuiStatePaths = nec'}
         EvKey KUp [] -> do
-          let nec = tuiStatePaths s
           case NEC.nonEmptyCursorSelectPrev nec of
             Nothing -> continue s
             Just nec' -> continue $ s { tuiStatePaths = nec'}
+        EvKey KEnter [] -> do
+          let selection = NEC.nonEmptyCursorCurrent nec
+          exist <- liftIO $ doesDirectoryExist selection
+          case exist of
+            True -> do
+              liftIO $ setCurrentDirectory selection
+              newState <- liftIO buildInitialState
+              continue newState
+            False -> continue s
         _ -> continue s
     _ -> continue s
