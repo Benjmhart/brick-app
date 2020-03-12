@@ -1,16 +1,3 @@
-# The Brick Library - Terminal User Interfaces in Haskell
-
-#### Ben Hart
-
-(wholsale stolen from Tom Sydney Kerckhove & FP complete)
-
-What is a Terminal user interface?
-
- - not a Graphic interface
- - not a CLI
- - runs in terminal
- - think 'ncurses'
- - some similar apps - tig, ranger, vim, emacs, nmtui
 
 clone:
 https://github.com/NorfairKing/tui-base
@@ -22,7 +9,23 @@ to run the app at any time, run:
 tooling:
 `stack install ghcid`
 `echo "--command=stack ghci --allow-eval" > .ghcid`
-_________
+
+********
+
+# The Brick Library - Terminal User Interfaces in Haskell
+#### Ben Hart
+
+(wholesale stolen from Tom Sydney Kerckhove & FP complete)
+
+What is a Terminal user interface?
+
+ - not a Graphic interface
+ - not a CLI
+ - runs in terminal
+ - think 'ncurses'
+ - some similar apps - tig, ranger, vim, emacs, nmtui
+
+********
 
 # What is the Brick library?
 
@@ -30,20 +33,22 @@ _________
 - Typically uses cursors over some data structure to navigate menus and options
 - a great place for someone new to haskell to build their first non-trivial app
 
-_________
+********
 
 # How does the Brick library work?
 
+```
 start  --> State --> Draw
-              ^        |
-              |        |
-           Event  <---/
+                 ^        |
+                 |        |
+               Event  <---/
+```
 
 - Brick uses an event based FRP framework to draw widgets based on a state type
 - The draw is a pure function from state
 - Events can be handled in IO - so we can perform effects
 
-_________
+********
 
 # Basic brick structure in types
 
@@ -55,7 +60,7 @@ _________
 - today, we'll look at an app that uses a simple state and the default events.
 
 
-_________
+********
 
 what is the structure of the `App` at the term level?
 
@@ -71,7 +76,7 @@ data App s e n =
 - `AttrMap` is a way to do styling
 - Widget is sort of like `show` it is a type that knows how to draw itself.
 
-_________
+********
 
 # The app we'll be building today
 
@@ -87,7 +92,7 @@ Stage 3: Select one and dive deeper
 - Event for Enter keypress 
 - adjust render function
 
-_________
+********
 
 # important functions
 
