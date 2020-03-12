@@ -39,9 +39,9 @@ What is a Terminal user interface?
 
 ```
 start  --> State --> Draw
-                 ^        |
-                 |        |
-               Event  <---/
+             ^        |
+             |        |
+           Event  <---/
 ```
 
 - Brick uses an event based FRP framework to draw widgets based on a state type
